@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - MISTRAL_API_KEY=i0nKOaw2v8VXp3PVzxnOauTAmY7Dl0d7
+    command: uvicorn main:app --host 0.0.0.0 --port 8000
