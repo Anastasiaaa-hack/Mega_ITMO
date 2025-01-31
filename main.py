@@ -56,7 +56,7 @@ async def predict(request: PredictionRequest):
         return PredictionResponse(
             id=request_id,
             answer=answer,
-            reasoning=reasoning,
+            reasoning="Ответ сгенерирован с помощью модели Mistral AI. "+reasoning,
             sources=sources[:3],
         )
     except Exception as e:
