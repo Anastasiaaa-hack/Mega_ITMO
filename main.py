@@ -11,7 +11,7 @@ from typing import Optional
 app = FastAPI()
 
 # Инициализация клиента Mistral API
-mistral_client = Mistral(api_key="i0nKOaw2v8VXp3PVzxnOauTAmY7Dl0d7")  # Укажите ваш API-ключ
+mistral_client = Mistral(api_key="i0nKOaw2v8VXp3PVzxnOauTAmY7Dl0d7")
 
 class PredictionRequest(BaseModel):
     query: str
@@ -44,7 +44,7 @@ async def predict(request: PredictionRequest):
 
         # Поиск ссылок в интернете
         search_results = search_web(query)
-        sources = search_results[:3]  # Ограничиваем количество ссылок до 3
+        sources = search_results[:3] 
 
         # Парсинг новостей
         news_links = get_latest_news()
@@ -74,7 +74,7 @@ def get_latest_news() -> List[str]:
         soup = BeautifulSoup(response.text, 'html.parser')
         # Используем urljoin для обработки относительных ссылок
         news_links = [urljoin(base_url, a['href']) for a in soup.find_all('a', href=True) if 'news' in a['href']]
-        return news_links[:3]  # Ограничиваем количество новостей до 3
+        return news_links[:3] 
     except requests.RequestException:
         return []
 
@@ -83,13 +83,13 @@ def extract_answer_from_options(query: str, reasoning: str) -> Optional[int]:
     Универсальная функция для извлечения номера правильного ответа из текста reasoning.
     Работает как с числами, так и с текстовыми вариантами.
     """
-    # Извлекаем варианты ответов из query (например, "1. 2007", "2. 2009", "3. ARWU (Shanghai Ranking)")
+    # Извлекаем варианты ответов из query 
     options = re.findall(r'(\d+)\.\s*(.*)', query)  # Захватываем номера и текст или числа
 
     # Приводим reasoning к нижнему регистру для упрощения поиска
     reasoning_lower = reasoning.lower()
 
-    # Проверяем, есть ли явное указание номера ответа в reasoning (например, "3. QS World University Rankings")
+    # Проверяем, есть ли явное указание номера ответа в reasoning 
     explicit_answer_match = re.search(r'(\d+)\.\s*(.*)', reasoning)
     if explicit_answer_match:
         explicit_number = int(explicit_answer_match.group(1))
@@ -104,9 +104,9 @@ def extract_answer_from_options(query: str, reasoning: str) -> Optional[int]:
             return int(number)
 
     # Если точных совпадений нет, ищем числовые значения (например, год)
-    match = re.search(r'(\d{4})', reasoning_lower)  # Ищем год
+    match = re.search(r'(\d{4})', reasoning_lower)  
     if match:
-        reasoning_year = match.group(1)  # Извлекаем год из reasoning
+        reasoning_year = match.group(1) 
         for number, option in options:
             option_cleaned = option.strip().lower()
             if reasoning_year in option_cleaned:
