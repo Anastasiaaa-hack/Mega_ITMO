@@ -11,7 +11,7 @@ from typing import Optional
 app = FastAPI()
 
 # Инициализация клиента Mistral API
-mistral_client = Mistral(api_key="i0nKOaw2v8VXp3PVzxnOauTAmY7Dl0d7")
+mistral_client = Mistral(api_key="")
 
 class PredictionRequest(BaseModel):
     query: str
